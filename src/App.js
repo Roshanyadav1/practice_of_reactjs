@@ -1,11 +1,12 @@
 import React from "react";
-import UserForm from "./hooks/custumHook/UserForm";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
   return (
-    <div>
-        <UserForm />
-    </div>
+    <Provider store={store}>
+      <div>Hello</div>
+    </Provider>
   );
 }
 
