@@ -1,4 +1,4 @@
-table {
+/* table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
@@ -26,4 +26,13 @@ tfoot td{
     text-align: center;
     background-color: lime;
     color: white;
+} */
+.form-outline{
+  position: relative;
+}
+.search{
+  width: 50%;
+}
+.con{
+  margin-top: 10px;
 }
