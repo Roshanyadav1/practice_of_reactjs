@@ -5,32 +5,31 @@ import {
   useFilters,
   usePagination,
   useRowSelect,
-  useSortBy
   // useAsyncDebounce,
 } from "react-table";
-// import ColumnFilter from "./ColumnFilter";
-import { COLUMNS } from "./Colums";
-import GlobalFilter from "./GlobalFilter";
-import MOCK_DATA from "./MOCK_DATA.json"
 import {
   MDBDropdown,
   MDBDropdownMenu,
   MDBDropdownToggle,
   MDBDropdownItem,
 } from "mdb-react-ui-kit";
-
-// import "./table.css";
 import { MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
-import CheckBox from "./CheckBox";
 
-const FilteringTable = () => {
+import ColumnFilter from "./ColumnFilter";
+import { COLUMNS } from "./Colums";
+import GlobalFilter from "./GlobalFilter";
+import MOCK_DATA from "./MOCK_DATA.json";
+import CheckBox from "./CheckBox";
+import "./Table.css";
+
+const Table = () => {
+  //Reder the data only once when we use useMemo()
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
 
   const defaultColumn = useMemo(() => {
     return {
-      // Filter: ColumnFilter,
-      Filter: '',
+      Filter: ColumnFilter,
     };
   }, []);
 
@@ -42,7 +41,6 @@ const FilteringTable = () => {
     },
     useFilters,
     useGlobalFilter,
-    useSortBy,
     usePagination,
     useRowSelect,
     (hooks) => {
@@ -68,7 +66,7 @@ const FilteringTable = () => {
     getTableBodyProps,
     headerGroups,
     footerGroups,
-    // page,
+    page,
     nextPage,
     previousPage,
     canNextPage,
@@ -77,7 +75,7 @@ const FilteringTable = () => {
     gotoPage,
     pageCount,
     setPageSize,
-    rows,
+    // rows,
     prepareRow,
     state,
     setGlobalFilter,
@@ -90,47 +88,54 @@ const FilteringTable = () => {
   const { pageIndex, pageSize } = state;
   // const firstPageRows = rows.slice(0, 10);
 
-
   return (
     <div>
-      <div style={{ textAlign: "end", padding: "10px" }}>
+      <div className="header_part_compo">
         {/* Global filter component  */}
-        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+        <div className="search_bar">
+          <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+        </div>
         {/* Global filter end here  */}
 
         {/* select the page size code  */}
-        <select
-          value={pageSize}
-          onChange={(e) => setPageSize(Number(e.target.value))}
-        >
-          {[10, 25, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
+        <div className="page_selector">
+          <select
+            value={pageSize}
+            onChange={(e) => setPageSize(Number(e.target.value))}
+          >
+            {[10, 25, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
+
         {/* section page size end here  */}
 
         {/* Dropdown list */}
-        <MDBDropdown>
-          <MDBDropdownToggle>Hide and Seek</MDBDropdownToggle>
-          <MDBDropdownMenu>
-            <MDBDropdownItem>
-              <div>
-                <input type="checkbox" {...getToggleHideAllColumnsProps()} />
-                Toggle All
-              </div>
-            </MDBDropdownItem>
-            <MDBDropdownItem>
-              {allColumns.map((column) => (
-                <div key={column.id}>
-                  <input type="checkbox" {...column.getToggleHiddenProps()} />
-                  {column.Header}
+        <div className="drop_down_menu">
+          <MDBDropdown>
+            <MDBDropdownToggle>Hide and Seek</MDBDropdownToggle>
+            <MDBDropdownMenu>
+              <MDBDropdownItem>
+                <div>
+                  <input type="checkbox" {...getToggleHideAllColumnsProps()} />
+                  Toggle All
                 </div>
-              ))}
-            </MDBDropdownItem>
-          </MDBDropdownMenu>
-        </MDBDropdown>
+              </MDBDropdownItem>
+              <MDBDropdownItem>
+                {allColumns.map((column) => (
+                  <div key={column.id}>
+                    <input type="checkbox" {...column.getToggleHiddenProps()} />
+                    {column.Header}
+                  </div>
+                ))}
+              </MDBDropdownItem>
+            </MDBDropdownMenu>
+          </MDBDropdown>
+        </div>
+
         {/* dropdown list end here  */}
       </div>
 
@@ -152,7 +157,7 @@ const FilteringTable = () => {
           </MDBTableHead>
 
           <MDBTableBody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {page.map((row) => {
               // change the page to rows to see the all list of data in one page
               prepareRow(row);
               return (
@@ -195,7 +200,7 @@ const FilteringTable = () => {
       <div>
         {/* Showing the code of total no of pages and which page is currently opened  */}
         <span>
-          page{" "}
+          Page{" "}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
           </strong>{" "}
@@ -234,4 +239,4 @@ const FilteringTable = () => {
   );
 };
 
-export default FilteringTable;
+export default Table;

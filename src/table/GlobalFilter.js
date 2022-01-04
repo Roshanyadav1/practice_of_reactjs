@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAsyncDebounce } from "react-table";
-// import { MDBInput } from "mdb-react-ui-kit";
+import { MDBInput } from "mdb-react-ui-kit";
 // import styles from "./table.css";
 
 function GlobalFilter({ filter, setFilter }) {
@@ -17,7 +17,7 @@ function GlobalFilter({ filter, setFilter }) {
         marginTop: "10px",
       }}
     >
-      <input
+      <MDBInput
         label="Search"
         id="form1"
         type="text"
