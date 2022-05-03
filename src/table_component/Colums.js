@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+// import { format } from "date-fns";
 import SelectColumnFilter from "./SelectColumnFilter";
 // import ColumnFilter from "./ColumnFilter";
 
@@ -62,19 +62,22 @@ export const COLUMNS = [
     Header: 'Status',
     accessor: 'status',
     Filter: SelectColumnFilter,
-    filter: 'includes',
+    // filter: 'includes',
+    filter: false,
   },
   {
     Header: 'Year',
     accessor: 'year',
     Filter: SelectColumnFilter,
-    filter: 'includes',
+    // filter: 'includes',
+    filter: false,
   },
   {
     Header: 'Subject',
     accessor: 'subject',
     Filter: SelectColumnFilter,
-    filter: 'includes',
+    // filter: 'includes',
+    filter: false,
   },
 ];
 

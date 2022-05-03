@@ -22,8 +22,10 @@ import {
 // import "./table.css";
 import { MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
 import CheckBox from "./CheckBox";
+import DropDownFilter from "./DropDownFilter";
 
 const FilteringTable = () => {
+  
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => MOCK_DATA, []);
 
@@ -68,7 +70,7 @@ const FilteringTable = () => {
     getTableBodyProps,
     headerGroups,
     footerGroups,
-    // page,
+    page,
     nextPage,
     previousPage,
     canNextPage,
@@ -98,6 +100,12 @@ const FilteringTable = () => {
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
         {/* Global filter end here  */}
 
+
+        {/* Trying to make my own filter  */}
+        <DropDownFilter
+          column={tableInstance}
+        />
+        {/* Trying to make my own filter  */}
         {/* select the page size code  */}
         <select
           value={pageSize}
@@ -140,19 +148,32 @@ const FilteringTable = () => {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
+
+
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
+
+                    {/* <span>
+                      {column.isSorted
+                      .0
+                        ? column.isSortedDesc
+                          ? ' 🔽'
+                          : ' 🔼'
+                        : ''}
+                    </span> */}
                     <div>
                       {column.canFilter ? column.render("Filter") : null}
                     </div>
                   </th>
+
+
                 ))}
               </tr>
             ))}
           </MDBTableHead>
 
           <MDBTableBody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {page.map((row) => {
               // change the page to rows to see the all list of data in one page
               prepareRow(row);
               return (
